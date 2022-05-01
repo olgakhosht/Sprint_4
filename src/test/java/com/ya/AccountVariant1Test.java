@@ -21,10 +21,18 @@ public class AccountVariant1Test {
     }
 
     @Test
+    @DisplayName("Проверка строки без значения")
+    public void checkNameNullToEmboss() {
+        Account account = new Account(null);
+        boolean actual = account.checkNameToEmboss(null);
+        assertThat("При строке без значения не false", actual, equalTo(false));
+    }
+
+    @Test
     @DisplayName("Проверка строки с некорректной длиной")
     public void checkNameWithInvalidLengthToEmboss() {
-        String[] namesWithInvalidLength = {" ", "Л", "ФИ", "Петр Сидоровиновский", "Сидор Сидоровиновский", "Светланасветланасветлана Светличнаясветличнаясветл"};
-        for (int i = 0; i <= 5; i++) {
+        String[] namesWithInvalidLength = {"", " ", "Л", "ФИ", "Петр Сидоровиновский", "Сидор Сидоровиновский", "Светланасветланасветлана Светличнаясветличнаясветл"};
+        for (int i = 0; i <= 6; i++) {
             Account account = new Account(namesWithInvalidLength[i]);
             boolean actual = account.checkNameToEmboss(namesWithInvalidLength[i]);
             assertThat("При некорректной длине строки - true", actual, equalTo(false));

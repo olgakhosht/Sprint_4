@@ -1,6 +1,5 @@
 package com.ya;
 
-import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -22,7 +21,7 @@ public class AccountVariant2ParameterizedTest {
         this.expected = expected;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Тестовые данные = {1}")
     public static Object[][] getData() {
         return new Object[][]{
                 // Тестовые данные с учетом классов эквивалентности и граничных значений
@@ -30,7 +29,10 @@ public class AccountVariant2ParameterizedTest {
                 {"При корректной строке (3 символа,1 пробел в середине) false вместо true", "Л И", true},
                 {"При корректной строке (19 символов, 1 пробел в середине) false вместо true", "Милана Петрановская", true},
                 {"При корректной строке (11 символов, 1 пробел в середине) false вместо true", "Иван Иванов", true},
+                // Строка без значения
+                {"При строке без значения не false", null, false},
                 // Cтроки с некорректной длиной (менее 3-х символов)
+                {"При пустой строке true вместо false", "", false},
                 {"При длине строки (1 символ-пробел) true вместо false", " ", false},
                 {"При длине строки (1 символ) true вместо false", "Л", false},
                 {"При длине строки (2 символа) true вместо false", "ФИ", false},
@@ -50,7 +52,6 @@ public class AccountVariant2ParameterizedTest {
     }
 
     @Test
-    @DisplayName("Проверка строки {nameData}")
     public void checkAllNameToEmboss() {
         Account account = new Account(nameData);
         boolean actual = account.checkNameToEmboss(nameData);
